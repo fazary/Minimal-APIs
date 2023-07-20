@@ -1,6 +1,5 @@
 
 using AutoMapper;
-using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using SixMinApi.Data;
 using SixMinApi.Dtos;
@@ -11,13 +10,9 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-var sqlConBuilder = new SqlConnectionStringBuilder();
+var con = builder.Configuration.GetConnectionString("SQLDbConnection");
 
-sqlConBuilder.ConnectionString = builder.Configuration.GetConnectionString("SQLDbConnection");
-sqlConBuilder.UserID = builder.Configuration["UserID"];
-sqlConBuilder.Password = builder.Configuration["Password"];
-
-builder.Services.AddDbContext<AppDbContext>(opt => opt.UseSqlServer(sqlConBuilder.ConnectionString));
+builder.Services.AddDbContext<AppDbContext>(opt => opt.UseSqlite(con));
 builder.Services.AddScoped<ICommandRepo, CommandRepo>();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
