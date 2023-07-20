@@ -1,0 +1,15 @@
+@_Host=http://localhost:5072/api/v1/commands
+
+###
+GET {{_Host}}
+###
+GET {{_Host}}/1
+###
+POST {{_Host}}
+Content-Type: application/json
+
+{
+    "HowTo": "How Ezz",
+    "Platform": "Win",
+    "CommandLine": "New"
+}
